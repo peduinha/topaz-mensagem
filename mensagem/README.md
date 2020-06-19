@@ -1,19 +1,23 @@
-# Getting Started
+# Projeto para testes TOPAZ 
 
+
+# Iniciar o servidor 
+ Fazer o download do arquivo "mensagem.jar" - na pasta /build, após clicar duaz vezes neste arquivo para executar, para conferir se subiu podemos olhar no Gerenciador de Tarefas 
+
+# Finalizar o servidor 
+   Abrir o Gerenciador de Tarefas e clicar no botão "Finalizar Tarefa" na tarefa Java, como mostra a imagem.
+   
 ![Screenshot](java-jar.png)
 
-### Reference Documentation
-For further reference, please consider the following sections:
 
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/maven-plugin/reference/html/#build-image)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/htmlsingle/#boot-features-developing-web-applications)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-
+# Executando as chamadas
+  Criar uma chamada rest(POST) para o endereço - http://localhost:8080/api/mensagem/compra200, criar um objeto no body com os parâmetros  
+  {
+  	"servidor": "localhost",
+    "porta": 8080,
+    "data": "3012",
+    "conta": "1234157"
+  }
+  
+ ![Screenshot](postman-conta.png)
+  
