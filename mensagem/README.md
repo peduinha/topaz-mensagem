@@ -19,9 +19,13 @@
     "conta": "1234157"
   }
   
- ![Screenshot](postman-conta.png)
-  
-  
+ ![Screenshot](postman-conta-ok.png)
+ 
+ 
+ # Tratamento de Erros
+ ![Screenshot](postman-conta-erro.png)
+ 
+ 
  # Serviços Mapeados 
   
  1-Compra - http://localhost:8899/testeatm/compra 
