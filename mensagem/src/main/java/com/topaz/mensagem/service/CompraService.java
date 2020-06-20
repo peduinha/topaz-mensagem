@@ -37,10 +37,8 @@ public class CompraService {
 			socket.getOutputStream().write(messageBytes);
 			
 			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return e.getCause().toString();
+		}  catch (Exception e) {
+			return "ERRO - Compra200 - " + e.getMessage();
 		}
 		return "WebService - Compra200 executado !";
 	}
@@ -74,9 +72,7 @@ public class CompraService {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return e.getCause().toString();
+			return "ERRO - CompraPara420 - " + e.getMessage();
 		}
 		return "WebService - CompraPara420 executado !";
 	}
@@ -110,9 +106,7 @@ public class CompraService {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return e.getCause().toString();
+			return "ERRO - Compra420 - " + e.getMessage();
 		}
 		return "WebService - Compra420 executado !";
 	}
@@ -147,9 +141,7 @@ public class CompraService {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return e.getCause().toString();
+			return "ERRO - CompraUSD - " + e.getMessage();
 		}
 		return "WebService - CompraUSD executado !";
 	}
@@ -201,13 +193,5 @@ public class CompraService {
 		return result2;
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
 
 }

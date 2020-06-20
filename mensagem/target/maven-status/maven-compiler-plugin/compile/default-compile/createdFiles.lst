@@ -1,0 +1,5 @@
+com\topaz\mensagem\MensagemApplication.class
+com\topaz\mensagem\service\CompraService.class
+com\topaz\mensagem\service\ContaService.class
+com\topaz\mensagem\controller\MensagemController.class
+com\mensagem\dto\FiltroDTO.class

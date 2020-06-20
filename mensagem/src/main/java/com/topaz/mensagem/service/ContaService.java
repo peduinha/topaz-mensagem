@@ -34,9 +34,7 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return e.getCause().toString();
+			return "ERRO - ConsultaSaldo - " + e.getMessage();
 		}
 		return "WebService - ConsultaSaldo executado !";
 	}
@@ -66,11 +64,9 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return e.getCause().toString();
+			return "ERRO - ConsultaExtrato - " + e.getMessage();
 		}
-		return "WebService - consultaExtrato executado !";
+		return "WebService - ConsultaExtrato executado !";
 	}
 	
 	public String retiro(FiltroDTO filtro) {
@@ -102,11 +98,9 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return e.getCause().toString();
+			return "ERRO - Retiro - " + e.getMessage();
 		}
-		return "WebService - retiro executado !";
+		return "WebService - Retiro executado !";
 	}
 	
 	public String retiroPara420(FiltroDTO filtro) {
@@ -138,11 +132,9 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return e.getCause().toString();
+			return "ERRO - RetiroPara420 - " + e.getMessage();
 		}
-		return "WebService - retiroPara420 executado !";
+		return "WebService - RetiroPara420 executado !";
 	}
 	
 	public String retiro420(FiltroDTO filtro) {
@@ -175,11 +167,9 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			return e.getCause().toString();
+			return "ERRO - Retiro420 - " + e.getMessage();
 		}
-		return "WebService - retiro420 executado !";
+		return "WebService - Retiro420 executado !";
 	}
 	
 	public static byte[] generateBitMap_1() throws Exception {

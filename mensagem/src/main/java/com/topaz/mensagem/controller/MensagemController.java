@@ -1,5 +1,7 @@
 package com.topaz.mensagem.controller;
 
+import java.net.ConnectException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,18 +23,13 @@ public class MensagemController {
 	private ContaService contaService;
 
 	@PostMapping("/compra")
-	public String compra(@RequestBody FiltroDTO filtro) {
+	public String compra(@RequestBody FiltroDTO filtro) throws ConnectException {
 
 		String retorno = "";
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			try {
-				retorno = this.compraService.executaCompra200(filtro);
-			} catch (Exception e) {
-				// e.printStackTrace();
-				return "ERRO - compra - " + e.getMessage();
-			}
+			retorno = this.compraService.executaCompra200(filtro);
 		} else {
 			return validar;
 		}
@@ -47,13 +44,8 @@ public class MensagemController {
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			try {
-				retorno = this.compraService.executaCompraPara420(filtro);
-				retorno = this.compraService.executaCompra420(filtro);
-			} catch (Exception e) {
-				// e.printStackTrace();
-				return "ERRO - compraReversa - " + e.getMessage();
-			}
+			retorno = this.compraService.executaCompraPara420(filtro);
+			retorno = this.compraService.executaCompra420(filtro);
 		} else {
 			return validar;
 		}
@@ -68,12 +60,7 @@ public class MensagemController {
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			try {
-				retorno = this.compraService.executaCompraUSD(filtro);
-			} catch (Exception e) {
-				// e.printStackTrace();
-				return "ERRO - compraUSD - " + e.getMessage();
-			}
+			retorno = this.compraService.executaCompraUSD(filtro);
 		} else {
 			return validar;
 		}
@@ -88,12 +75,7 @@ public class MensagemController {
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			try {
-				retorno = this.contaService.consultaSaldo(filtro);
-			} catch (Exception e) {
-				// e.printStackTrace();
-				return "ERRO - consultaSaldo - " + e.getMessage();
-			}
+			retorno = this.contaService.consultaSaldo(filtro);
 		} else {
 			return validar;
 		}
@@ -108,12 +90,7 @@ public class MensagemController {
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			try {
-				retorno = this.contaService.consultaExtrato(filtro);
-			} catch (Exception e) {
-				// e.printStackTrace();
-				return "ERRO - consultaExtrato - " + e.getMessage();
-			}
+			retorno = this.contaService.consultaExtrato(filtro);
 		} else {
 			return validar;
 		}
@@ -128,12 +105,7 @@ public class MensagemController {
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			try {
-				retorno = this.contaService.retiro(filtro);
-			} catch (Exception e) {
-				// e.printStackTrace();
-				return "ERRO - retiro - " + e.getMessage();
-			}
+			retorno = this.contaService.retiro(filtro);			
 		} else {
 			return validar;
 		}
@@ -148,13 +120,8 @@ public class MensagemController {
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			try {
-				retorno = this.contaService.retiroPara420(filtro);
-				retorno = this.contaService.retiro420(filtro);
-			} catch (Exception e) {
-				// e.printStackTrace();
-				return "ERRO - retiroReversa - " + e.getMessage();
-			}
+			retorno = this.contaService.retiroPara420(filtro);
+			retorno = this.contaService.retiro420(filtro);
 		} else {
 			return validar;
 		}
