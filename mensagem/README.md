@@ -11,13 +11,31 @@
 
 
 # Executando as chamadas
-  Criar uma chamada rest(POST) para o endereço - http://localhost:8080/api/mensagem/compra200, criar um objeto no body com os parâmetros  
+  Criar uma chamada rest(POST) para o endereço - http://localhost:8899/testeatm/compra, criar um objeto no body com os parâmetros  
   {
   	"servidor": "localhost",
     "porta": 8080,
-    "data": "3012",
+    "data": "1230",
     "conta": "1234157"
   }
   
  ![Screenshot](postman-conta.png)
+  
+  
+ # Serviços Mapeados 
+  
+ 1-Compra - http://localhost:8899/testeatm/compra 
+
+2- Compra y Reversa - http://localhost:8899/testeatm/compraReversa
+
+3- Compra USD - http://localhost:8899/testeatm/compraUSD
+
+4- Consulta Extrato - http://localhost:8899/testeatm/consultaExtrato
+
+5- Consulta Saldo - http://localhost:8899/testeatm/consultaSaldo
+
+6- Retiro - http://localhost:8899/testeatm/retiro
+
+7- Retiro y reversa - http://localhost:8899/testeatm/retiroReversa
+  
   
