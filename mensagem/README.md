@@ -2,7 +2,7 @@
 
 
 # Iniciar o servidor 
- Fazer o download do arquivo "mensagem.jar" - na pasta /build, após clicar duaz vezes neste arquivo para executar, para conferir se subiu podemos olhar no Gerenciador de Tarefas 
+ Fazer o download do arquivo "testeAtm.jar" - na pasta /build, após clicar duaz vezes neste arquivo para executar, para conferir se iniciou o servidor de teste, podemos olhar no Gerenciador de Tarefas 
 
 # Finalizar o servidor 
    Abrir o Gerenciador de Tarefas e clicar no botão "Finalizar Tarefa" na tarefa Java, como mostra a imagem.
