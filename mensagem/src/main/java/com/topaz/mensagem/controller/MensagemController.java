@@ -1,6 +1,7 @@
 package com.topaz.mensagem.controller;
 
 import java.net.ConnectException;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,13 +39,14 @@ public class MensagemController {
 	}
 	
 	@PostMapping("/compraReversa")
-	public String compraReversa(@RequestBody FiltroDTO filtro) {
+	public String compraReversa(@RequestBody FiltroDTO filtro) throws InterruptedException {
 
 		String retorno = "";
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
 			retorno = this.compraService.executaCompraPara420(filtro);
+			TimeUnit.SECONDS.sleep(5);
 			retorno += " | ";
 			retorno += this.compraService.executaCompra420(filtro);
 		} else {
@@ -115,13 +117,14 @@ public class MensagemController {
 	}
 	
 	@PostMapping("/retiroReversa")
-	public String retiroReversa(@RequestBody FiltroDTO filtro) {
+	public String retiroReversa(@RequestBody FiltroDTO filtro) throws InterruptedException {
 
 		String retorno = "";
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
 			retorno = this.contaService.retiroPara420(filtro);
+			TimeUnit.SECONDS.sleep(5);
 			retorno += " | ";
 			retorno += this.contaService.retiro420(filtro);
 		} else {
