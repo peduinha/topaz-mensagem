@@ -1,10 +1,12 @@
 package com.topaz.mensagem.service;
 
 import java.net.Socket;
+import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
 import com.mensagem.dto.FiltroDTO;
+import com.mensagem.dto.HttpResponseDTO;
 
 @Service
 public class ContaService {
@@ -69,7 +71,9 @@ public class ContaService {
 		return "WebService - ConsultaExtrato executado !";
 	}
 	
-	public String retiro(FiltroDTO filtro) {
+	public HttpResponseDTO retiro(FiltroDTO filtro) {
+		
+		StringBuilder hhmmss = new StringBuilder();
 
 		try {
 			Socket socket = new Socket(filtro.getServidor(), filtro.getPorta());
@@ -82,7 +86,16 @@ public class ContaService {
 			
 			String message = "101918394908002000000000008000000000008000";
 			message += filtro.getData();
-			message += "163520005216133519";
+			
+			LocalDateTime a = LocalDateTime.now();
+			hhmmss.append(this.ajustaHora(a.getHour()) );
+			hhmmss.append(this.ajustaHora(a.getMinute()));
+			hhmmss.append(this.ajustaHora(a.getSecond()));
+			message += hhmmss;
+			filtro.setHhmmss_200(hhmmss.toString());
+			filtro.setMMDDhhmmss_200(filtro.getData() + hhmmss.toString());
+			
+			message += "005216133519";
 			message += filtro.getData();
 			message += "601101206123456009916005216TERMID01CARD ACCEPTOR  CARD ACCEPTOR NAME/LOCATICITY NAME    BR986986021#102@0999#103@";
 			message += filtro.getConta();
@@ -98,12 +111,16 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			return "ERRO - Retiro - " + e.getMessage();
+			//return "ERRO - Retiro - " + e.getMessage();
+			return HttpResponseDTO.fail("ERRO - Retiro - " + e.getMessage());
 		}
-		return "WebService - Retiro executado !";
+		//return "WebService - Retiro executado !";
+		return HttpResponseDTO.success("WebService - Retiro executado !", "ret", filtro);
 	}
 	
-	public String retiroPara420(FiltroDTO filtro) {
+	public HttpResponseDTO retiroPara420(FiltroDTO filtro) {
+		
+		StringBuilder hhmmss = new StringBuilder();
 
 		try {
 			Socket socket = new Socket(filtro.getServidor(), filtro.getPorta());
@@ -116,7 +133,16 @@ public class ContaService {
 			
 			String message = "101918394908002000000000008000000000008000";
 			message += filtro.getData();
-			message += "163520005216133519";
+			
+			LocalDateTime a = LocalDateTime.now();
+			hhmmss.append(this.ajustaHora(a.getHour()) );
+			hhmmss.append(this.ajustaHora(a.getMinute()));
+			hhmmss.append(this.ajustaHora(a.getSecond()));
+			message += hhmmss;
+			filtro.setHhmmss_200(hhmmss.toString());
+			filtro.setMMDDhhmmss_200(filtro.getData() + hhmmss.toString());
+			
+			message += "005216133519";
 			message += filtro.getData();
 			message += "601101206123456009916005216TERMID01CARD ACCEPTOR  CARD ACCEPTOR NAME/LOCATICITY NAME    BR986986021#102@0999#103@";
 			message += filtro.getConta();
@@ -132,12 +158,16 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			return "ERRO - RetiroPara420 - " + e.getMessage();
+			//return "ERRO - RetiroPara420 - " + e.getMessage();
+			return HttpResponseDTO.fail("ERRO - RetiroPara420 - " + e.getMessage());
 		}
-		return "WebService - RetiroPara420 executado !";
+		//return "WebService - RetiroPara420 executado !";
+		return HttpResponseDTO.success("WebService - RetiroPara420 executado !", "ret", filtro);
 	}
 	
-	public String retiro420(FiltroDTO filtro) {
+	public HttpResponseDTO retiro420(FiltroDTO filtro) {
+		
+		StringBuilder hhmmss = new StringBuilder();
 
 		try {
 			Socket socket = new Socket(filtro.getServidor(), filtro.getPorta());
@@ -150,11 +180,23 @@ public class ContaService {
 			
 			String message = "101918394908002000000000008000";
 			message += filtro.getData();
-			message += "222212005248192212";
-			message += filtro.getData();
-			message += "601106123456009922005248TERMID01986020000521605121635200000012345600000000000021#102@0999#103@";
-			message += filtro.getConta();
 			
+			LocalDateTime a = LocalDateTime.now();
+			hhmmss.append(this.ajustaHora(a.getHour()) );
+			hhmmss.append(this.ajustaHora(a.getMinute()));
+			hhmmss.append(this.ajustaHora(a.getSecond()));
+			message += hhmmss;
+			filtro.setHhmmss_420(hhmmss.toString());
+			filtro.setMMDDhhmmss_420(filtro.getData() + hhmmss.toString());
+			
+			message += "005248192212";
+			message += filtro.getData();
+			message += "601106123456009922005248TERMID019860200005216";
+			
+			message += filtro.getHhmmss_200();
+			
+			message += "1635200000012345600000000000021#102@0999#103@";
+			message += filtro.getConta();
 
 			byte[] bitmap = generateBitMap_3();
 			byte[] messageBytes = new byte[result2.length+messageType.getBytes().length+bitmap.length+message.getBytes().length];		
@@ -167,9 +209,11 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			return "ERRO - Retiro420 - " + e.getMessage();
+			//return "ERRO - Retiro420 - " + e.getMessage();
+			return HttpResponseDTO.fail("ERRO - Retiro420 - " + e.getMessage());
 		}
-		return "WebService - Retiro420 executado !";
+		//return "WebService - Retiro420 executado !";
+		return HttpResponseDTO.success("WebService - Retiro420 executado !", "ret", filtro);
 	}
 	
 	public static byte[] generateBitMap_1() throws Exception {
@@ -242,6 +286,17 @@ public class ContaService {
 	    result2[15] = (byte) 0x00;
 	   
 		return result2;
+	}
+	
+	private String ajustaHora(Integer time) {
+		String timeString = time.toString();
+		String ret = "0";
+		if (timeString.length() == 1) {
+			ret += time;
+		} else {
+			ret = time.toString();
+		}
+		return ret;
 	}
 	
 }

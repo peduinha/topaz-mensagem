@@ -1,15 +1,20 @@
 package com.topaz.mensagem.service;
 
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.springframework.stereotype.Service;
 
 import com.mensagem.dto.FiltroDTO;
+import com.mensagem.dto.HttpResponseDTO;
 
 @Service
 public class CompraService {
 
-	public String executaCompra200(FiltroDTO filtro) {
+	public HttpResponseDTO executaCompra200(FiltroDTO filtro) {
+		
+		StringBuilder hhmmss = new StringBuilder();
 
 		try {
 			Socket socket = new Socket(filtro.getServidor(), filtro.getPorta());
@@ -22,7 +27,16 @@ public class CompraService {
 
 			String message = "101918394910002000000000008000000000008000";
 			message += filtro.getData();
-			message += "163519005216133519";
+			
+			LocalDateTime a = LocalDateTime.now();
+			hhmmss.append(this.ajustaHora(a.getHour()) );
+			hhmmss.append(this.ajustaHora(a.getMinute()));
+			hhmmss.append(this.ajustaHora(a.getSecond()));
+			message += hhmmss;
+			filtro.setHhmmss_200(hhmmss.toString());
+			filtro.setMMDDhhmmss_200(filtro.getData() + hhmmss.toString());
+				
+			message += "005216133519";
 			message += filtro.getData();
 			message += "599901206123456009916005216TERMID01CARD ACCEPTOR  CARD ACCEPTOR NAME/LOCATICITY NAME    BR986986021#102@0999#103@";
 			message += filtro.getConta();
@@ -35,15 +49,19 @@ public class CompraService {
 			System.arraycopy(message.getBytes(), 0, messageBytes, result2.length + messageType.getBytes().length + bitmap.length, message.getBytes().length);
 
 			socket.getOutputStream().write(messageBytes);
-			
-			
+				
 		}  catch (Exception e) {
-			return "ERRO - Compra200 - " + e.getMessage();
+			//return "ERRO - Compra200 - " + e.getMessage();
+			return HttpResponseDTO.fail("ERRO - Compra200 - " + e.getMessage());
 		}
-		return "WebService - Compra200 executado !";
+		
+		//return "WebService - Compra200 executado !";
+		return HttpResponseDTO.success("WebService - Compra200 executado !", "ret", filtro);
 	}
 	
-	public String executaCompraPara420(FiltroDTO filtro) {
+	public HttpResponseDTO executaCompraPara420(FiltroDTO filtro) {
+		
+		StringBuilder hhmmss = new StringBuilder();
 
 		try {
 			Socket socket = new Socket(filtro.getServidor(), filtro.getPorta());
@@ -55,8 +73,18 @@ public class CompraService {
 			String messageType = "0200";
 			
 			String message = "101918394907002000000000008000000000008000";
-			message += filtro.getData();					
-			message	+= "163519005216133519";
+			message += filtro.getData();
+			
+			LocalDateTime a = LocalDateTime.now();
+			hhmmss.append(this.ajustaHora(a.getHour()) );
+			hhmmss.append(this.ajustaHora(a.getMinute()));
+			hhmmss.append(this.ajustaHora(a.getSecond()));
+			message += hhmmss;
+			
+			filtro.setHhmmss_200(hhmmss.toString());
+			filtro.setMMDDhhmmss_200(filtro.getData() + hhmmss.toString());
+			
+			message	+= "005216133519";
 			message += filtro.getData();
 			message	+= "599901206123456009916005216TERMID01CARD ACCEPTOR  CARD ACCEPTOR NAME/LOCATICITY NAME    BR986986021#102@0999#103@";
 			message += filtro.getConta();
@@ -72,12 +100,17 @@ public class CompraService {
 			
 			
 		} catch (Exception e) {
-			return "ERRO - CompraPara420 - " + e.getMessage();
+			//return "ERRO - CompraPara420 - " + e.getMessage();
+			return HttpResponseDTO.fail("ERRO - CompraPara420 - " + e.getMessage());
 		}
-		return "WebService - CompraPara420 executado !";
+
+		//return "WebService - CompraPara420 executado !";
+		return HttpResponseDTO.success("WebService - CompraPara420 executado !", "ret", filtro);
 	}
 	
-	public String executaCompra420(FiltroDTO filtro) {
+	public HttpResponseDTO executaCompra420(FiltroDTO filtro) {
+		
+		StringBuilder hhmmss = new StringBuilder();
 
 		try {
 			Socket socket = new Socket(filtro.getServidor(), filtro.getPorta());
@@ -90,9 +123,23 @@ public class CompraService {
 			
 			String message = "101918394907002000000000008000";
 			message += filtro.getData();
-			message += "222212005248192212";
+			
+			LocalDateTime a = LocalDateTime.now();
+			hhmmss.append(this.ajustaHora(a.getHour()) );
+			hhmmss.append(this.ajustaHora(a.getMinute()));
+			hhmmss.append(this.ajustaHora(a.getSecond()));
+			message += hhmmss;
+			
+			filtro.setHhmmss_420(hhmmss.toString());
+			filtro.setMMDDhhmmss_420(filtro.getData() + hhmmss.toString());
+			
+			message	+= "005248192212";
 			message += filtro.getData();
-			message += "599906123456009922005248TERMID01986020000521605121635190000012345600000000000021#102@0999#103@";
+			message += "599906123456009922005248TERMID019860200005216";
+			
+			message += filtro.getHhmmss_200(); //aqui botar a hora do 200
+			
+			message += "1635190000012345600000000000021#102@0999#103@";
 			message += filtro.getConta();
 			
 			byte[] bitmap = generateBitMap_2();
@@ -106,13 +153,18 @@ public class CompraService {
 			
 			
 		} catch (Exception e) {
-			return "ERRO - Compra420 - " + e.getMessage();
+			//return "ERRO - Compra420 - " + e.getMessage();
+			return HttpResponseDTO.fail("ERRO - Compra420 - " + e.getMessage());
+			
 		}
-		return "WebService - Compra420 executado !";
+		//return "WebService - Compra420 executado !";
+		return HttpResponseDTO.success("WebService - Compra420 executado !", "ret", filtro);
 	}
 	
 		
-	public String executaCompraUSD(FiltroDTO filtro) {
+	public HttpResponseDTO executaCompraUSD(FiltroDTO filtro) {
+		
+		StringBuilder hhmmss = new StringBuilder();
 
 		try {
 			Socket socket = new Socket(filtro.getServidor(), filtro.getPorta());
@@ -125,7 +177,17 @@ public class CompraService {
 			
 			String message = "101918394911002000000000008000000000008000";
 			message += filtro.getData();
-			message += "163519005216133519";
+			
+			LocalDateTime a = LocalDateTime.now();
+			hhmmss.append(this.ajustaHora(a.getHour()) );
+			hhmmss.append(this.ajustaHora(a.getMinute()));
+			hhmmss.append(this.ajustaHora(a.getSecond()));
+			message += hhmmss;
+			
+			filtro.setHhmmss_200(hhmmss.toString());
+			filtro.setMMDDhhmmss_200(filtro.getData() + hhmmss.toString());
+			
+			message += "005216133519";
 			message += filtro.getData();
 			message += "599901206123456009916005216TERMID01CARD ACCEPTOR  CARD ACCEPTOR NAME/LOCATICITY NAME    BR840840021#102@0999#103@";
 			message += filtro.getConta();
@@ -141,9 +203,11 @@ public class CompraService {
 			
 			
 		} catch (Exception e) {
-			return "ERRO - CompraUSD - " + e.getMessage();
+			//return "ERRO - CompraUSD - " + e.getMessage();
+			return HttpResponseDTO.fail("ERRO - CompraUSD - " + e.getMessage());
 		}
-		return "WebService - CompraUSD executado !";
+		//return "WebService - CompraUSD executado !";
+		return HttpResponseDTO.success("WebService - CompraUSD executado !", "ret", filtro);
 	}
 	
 	public static byte[] generateBitMap_1() throws Exception {
@@ -191,6 +255,17 @@ public class CompraService {
 	    result2[15] = (byte) 0x00;
 	   
 		return result2;
+	}
+	
+	private String ajustaHora(Integer time) {
+		String timeString = time.toString();
+		String ret = "0";
+		if (timeString.length() == 1) {
+			ret += time;
+		} else {
+			ret = time.toString();
+		}
+		return ret;
 	}
 
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mensagem.dto.FiltroDTO;
+import com.mensagem.dto.HttpResponseDTO;
 import com.topaz.mensagem.service.CompraService;
 import com.topaz.mensagem.service.ContaService;
 
@@ -24,56 +25,69 @@ public class MensagemController {
 	private ContaService contaService;
 
 	@PostMapping("/compra")
-	public String compra(@RequestBody FiltroDTO filtro) throws ConnectException {
+	public HttpResponseDTO compra(@RequestBody FiltroDTO filtro) throws ConnectException {
 
-		String retorno = "";
+		HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			retorno = this.compraService.executaCompra200(filtro);
+			httpResponseDTO = this.compraService.executaCompra200(filtro);
 		} else {
-			return validar;
+			return HttpResponseDTO.fail("VALIDAR - ERROS - " + validar);
 		}
 		
-		return retorno;
+		return httpResponseDTO;
 	}
 	
 	@PostMapping("/compraReversa")
-	public String compraReversa(@RequestBody FiltroDTO filtro) throws InterruptedException {
+	public HttpResponseDTO compraReversa(@RequestBody FiltroDTO filtro) throws InterruptedException {
 
+		HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
 		String retorno = "";
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			retorno = this.compraService.executaCompraPara420(filtro);
-			TimeUnit.SECONDS.sleep(5);
-			retorno += " | ";
-			retorno += this.compraService.executaCompra420(filtro);
+			httpResponseDTO = this.compraService.executaCompraPara420(filtro);
+			if(httpResponseDTO.isSuccess()) {
+				retorno = httpResponseDTO.getMessage();
+				TimeUnit.SECONDS.sleep(3);
+				retorno += " | ";
+				
+				FiltroDTO dto = (FiltroDTO) httpResponseDTO.getContent().get("ret");
+				filtro.setHhmmss_200(dto.getHhmmss_200());
+				httpResponseDTO = this.compraService.executaCompra420(filtro);
+				
+				retorno += httpResponseDTO.getMessage();
+			}else {
+				retorno = httpResponseDTO.getMessage();
+			}
+			
 		} else {
-			return validar;
+			return HttpResponseDTO.fail("VALIDAR - ERROS - " + validar);
 		}
 		
-		return retorno;
+		httpResponseDTO.setMessage(retorno);
+		return httpResponseDTO;
 	}
 	
 	@PostMapping("/compraUSD")
-	public String compraUSD(@RequestBody FiltroDTO filtro) {
+	public HttpResponseDTO compraUSD(@RequestBody FiltroDTO filtro) {
 
-		String retorno = "";
+		HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			retorno = this.compraService.executaCompraUSD(filtro);
+			httpResponseDTO = this.compraService.executaCompraUSD(filtro);
 		} else {
-			return validar;
+			return HttpResponseDTO.fail("VALIDAR - ERROS - " + validar);
 		}
 		
-		return retorno;
+		return httpResponseDTO;
 	}
 	
 	@PostMapping("/consultaSaldo")
 	public String consultaSaldo(@RequestBody FiltroDTO filtro) {
-
+ 
 		String retorno = "";
 		String validar = this.validar(filtro);
 
@@ -102,36 +116,49 @@ public class MensagemController {
 	}
 	
 	@PostMapping("/retiro")
-	public String retiro(@RequestBody FiltroDTO filtro) {
+	public HttpResponseDTO retiro(@RequestBody FiltroDTO filtro) {
 
-		String retorno = "";
+		HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			retorno = this.contaService.retiro(filtro);			
+			httpResponseDTO = this.contaService.retiro(filtro);			
 		} else {
-			return validar;
+			return HttpResponseDTO.fail("VALIDAR - ERROS - " + validar);
 		}
 		
-		return retorno;
+		return httpResponseDTO;
 	}
 	
 	@PostMapping("/retiroReversa")
-	public String retiroReversa(@RequestBody FiltroDTO filtro) throws InterruptedException {
+	public HttpResponseDTO retiroReversa(@RequestBody FiltroDTO filtro) throws InterruptedException {
 
+		HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
 		String retorno = "";
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			retorno = this.contaService.retiroPara420(filtro);
-			TimeUnit.SECONDS.sleep(5);
-			retorno += " | ";
-			retorno += this.contaService.retiro420(filtro);
+			httpResponseDTO = this.contaService.retiroPara420(filtro);
+			if(httpResponseDTO.isSuccess()) {
+				retorno = httpResponseDTO.getMessage();
+				TimeUnit.SECONDS.sleep(3);
+				retorno += " | ";
+				
+				FiltroDTO dto = (FiltroDTO) httpResponseDTO.getContent().get("ret");
+				filtro.setHhmmss_200(dto.getHhmmss_200());
+				httpResponseDTO = this.contaService.retiro420(filtro);
+				retorno += httpResponseDTO.getMessage();
+				
+			}else {
+				retorno = httpResponseDTO.getMessage();
+			}
+			
 		} else {
-			return validar;
+			return HttpResponseDTO.fail("VALIDAR - ERROS - " + validar);
 		}
 		
-		return retorno;
+		httpResponseDTO.setMessage(retorno);
+		return httpResponseDTO;
 	}
 
 	public String validar(FiltroDTO filtro) {

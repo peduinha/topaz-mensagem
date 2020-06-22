@@ -11,5 +11,10 @@ public class FiltroDTO {
 	private Integer porta;
 	private String data;
 	private String conta;
-
+	private String hhmmss_200;
+	private String MMDDhhmmss_200;
+	
+	private String hhmmss_420;
+	private String MMDDhhmmss_420;
+	
 }
