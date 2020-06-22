@@ -45,7 +45,8 @@ public class MensagemController {
 
 		if (validar.equalsIgnoreCase("OK")) {
 			retorno = this.compraService.executaCompraPara420(filtro);
-			retorno = this.compraService.executaCompra420(filtro);
+			retorno += " | ";
+			retorno += this.compraService.executaCompra420(filtro);
 		} else {
 			return validar;
 		}
@@ -121,7 +122,8 @@ public class MensagemController {
 
 		if (validar.equalsIgnoreCase("OK")) {
 			retorno = this.contaService.retiroPara420(filtro);
-			retorno = this.contaService.retiro420(filtro);
+			retorno += " | ";
+			retorno += this.contaService.retiro420(filtro);
 		} else {
 			return validar;
 		}
