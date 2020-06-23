@@ -193,9 +193,10 @@ public class ContaService {
 			message += filtro.getData();
 			message += "601106123456009922005248TERMID019860200005216";
 			
+			message += filtro.getData();
 			message += filtro.getHhmmss_200();
 			
-			message += "1635200000012345600000000000021#102@0999#103@";
+			message += "0000012345600000000000021#102@0999#103@";
 			message += filtro.getConta();
 
 			byte[] bitmap = generateBitMap_3();

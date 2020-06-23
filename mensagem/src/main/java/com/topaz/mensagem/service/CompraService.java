@@ -118,11 +118,8 @@ public class CompraService {
 
 			result2[0] = (byte) 0x00;
 	        result2[1] = (byte) 0xB1;
-
-	        
+    
 			String messageType = "0420";
-			
-			
 			
 			String message = "101918394907002000000000008000";
 			message += filtro.getData();
