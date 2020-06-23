@@ -11,7 +11,9 @@ import com.mensagem.dto.HttpResponseDTO;
 @Service
 public class ContaService {
 
-	public String consultaSaldo(FiltroDTO filtro) {
+	public HttpResponseDTO consultaSaldo(FiltroDTO filtro) {
+		
+		StringBuilder hhmmss = new StringBuilder();
 
 		try {
 			Socket socket = new Socket(filtro.getServidor(), filtro.getPorta());
@@ -22,7 +24,20 @@ public class ContaService {
 
 			String messageType = "0200";
 			
-			String message = "10191839490730200005071542080052801242080507601101211123456     010415005280TERMID01CARD ACCEPTOR  986986021#102@0999#103@";
+			String message = "101918394907302000";
+			message += filtro.getData();
+			
+			LocalDateTime a = LocalDateTime.now();
+			hhmmss.append(this.ajustaHora(a.getHour()) );
+			hhmmss.append(this.ajustaHora(a.getMinute()));
+			hhmmss.append(this.ajustaHora(a.getSecond()));
+			message += hhmmss;
+			filtro.setHhmmss_200(hhmmss.toString());
+			filtro.setMMDDhhmmss_200(filtro.getData() + hhmmss.toString());
+			
+			message += "005280124208";
+			message += filtro.getData();
+			message += "601101211123456     010415005280TERMID01CARD ACCEPTOR  986986021#102@0999#103@";
 			message += filtro.getConta();
 
 			byte[] bitmap = generateBitMap_1();
@@ -36,12 +51,14 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			return "ERRO - ConsultaSaldo - " + e.getMessage();
+			return HttpResponseDTO.fail("ERRO - ConsultaSaldo - " + e.getMessage());
 		}
-		return "WebService - ConsultaSaldo executado !";
+		return HttpResponseDTO.success("WebService - ConsultaSaldo executado !", "ret", filtro);
 	}
 	
-	public String consultaExtrato(FiltroDTO filtro) {
+	public HttpResponseDTO consultaExtrato(FiltroDTO filtro) {
+		
+		StringBuilder hhmmss = new StringBuilder();
 
 		try {
 			Socket socket = new Socket(filtro.getServidor(), filtro.getPorta());
@@ -52,7 +69,20 @@ public class ContaService {
 
 			String messageType = "0200";
 			
-			String message = "10191839490731200005221542080052801242080522601101211123456     010415005280TERMID01CARD ACCEPTOR  986986021#102@0999#103@";
+			String message = "101918394907312000";
+			message += filtro.getData();
+			
+			LocalDateTime a = LocalDateTime.now();
+			hhmmss.append(this.ajustaHora(a.getHour()) );
+			hhmmss.append(this.ajustaHora(a.getMinute()));
+			hhmmss.append(this.ajustaHora(a.getSecond()));
+			message += hhmmss;
+			filtro.setHhmmss_200(hhmmss.toString());
+			filtro.setMMDDhhmmss_200(filtro.getData() + hhmmss.toString());
+			
+			message += "005280124208";
+			message += filtro.getData();
+			message += "601101211123456     010415005280TERMID01CARD ACCEPTOR  986986021#102@0999#103@";
 			message += filtro.getConta();
 
 			byte[] bitmap = generateBitMap_1();
@@ -66,9 +96,9 @@ public class ContaService {
 			
 			
 		} catch (Exception e) {
-			return "ERRO - ConsultaExtrato - " + e.getMessage();
+			return HttpResponseDTO.fail("ERRO - ConsultaExtrato - " + e.getMessage());
 		}
-		return "WebService - ConsultaExtrato executado !";
+		return HttpResponseDTO.success("WebService - ConsultaExtrato executado !", "ret", filtro);
 	}
 	
 	public HttpResponseDTO retiro(FiltroDTO filtro) {

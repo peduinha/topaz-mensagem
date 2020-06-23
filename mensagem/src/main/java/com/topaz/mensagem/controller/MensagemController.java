@@ -86,33 +86,33 @@ public class MensagemController {
 	}
 	
 	@PostMapping("/consultaSaldo")
-	public String consultaSaldo(@RequestBody FiltroDTO filtro) {
+	public HttpResponseDTO consultaSaldo(@RequestBody FiltroDTO filtro) {
  
-		String retorno = "";
+		HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			retorno = this.contaService.consultaSaldo(filtro);
+			httpResponseDTO = this.contaService.consultaSaldo(filtro);
 		} else {
-			return validar;
+			return HttpResponseDTO.fail("VALIDAR - ERROS - " + validar);
 		}
 		
-		return retorno;
+		return httpResponseDTO;
 	}
 	
 	@PostMapping("/consultaExtrato")
-	public String consultaExtrato(@RequestBody FiltroDTO filtro) {
+	public HttpResponseDTO consultaExtrato(@RequestBody FiltroDTO filtro) {
 
-		String retorno = "";
+		HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
 		String validar = this.validar(filtro);
 
 		if (validar.equalsIgnoreCase("OK")) {
-			retorno = this.contaService.consultaExtrato(filtro);
+			httpResponseDTO = this.contaService.consultaExtrato(filtro);
 		} else {
-			return validar;
+			return HttpResponseDTO.fail("VALIDAR - ERROS - " + validar);
 		}
 		
-		return retorno;
+		return httpResponseDTO;
 	}
 	
 	@PostMapping("/retiro")
