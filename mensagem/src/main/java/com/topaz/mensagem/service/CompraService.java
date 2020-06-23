@@ -119,7 +119,10 @@ public class CompraService {
 			result2[0] = (byte) 0x00;
 	        result2[1] = (byte) 0xB1;
 
+	        
 			String messageType = "0420";
+			
+			
 			
 			String message = "101918394907002000000000008000";
 			message += filtro.getData();
@@ -135,11 +138,13 @@ public class CompraService {
 			
 			message	+= "005248192212";
 			message += filtro.getData();
-			message += "599906123456009922005248TERMID019860200005216";
+			message += filtro.getHhmmss_200();
+			message += "123456009922005248TERMID019860200005216";
 			
+			message += filtro.getData();
 			message += filtro.getHhmmss_200(); //aqui botar a hora do 200
 			
-			message += "1635190000012345600000000000021#102@0999#103@";
+			message += "0000012345600000000000021#102@0999#103@";
 			message += filtro.getConta();
 			
 			byte[] bitmap = generateBitMap_2();
