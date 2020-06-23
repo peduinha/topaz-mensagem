@@ -138,9 +138,7 @@ public class CompraService {
 			
 			message	+= "005248192212";
 			message += filtro.getData();
-			message += filtro.getHhmmss_200();
-			message += "123456009922005248TERMID019860200005216";
-			
+			message += "599906123456009922005248TERMID019860200005216";
 			message += filtro.getData();
 			message += filtro.getHhmmss_200(); //aqui botar a hora do 200
 			
