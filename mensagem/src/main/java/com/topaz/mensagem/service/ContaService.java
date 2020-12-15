@@ -221,8 +221,8 @@ public class ContaService {
 			
 			message += "005248192212";
 			message += filtro.getData();
-			message += "601106123456009922005248TERMID019860200005216";
-			
+			//message += "601106123456009922005248TERMID019860200005216";
+			message += "601106123456009916005216TERMID019860200005216";
 			message += filtro.getData();
 			message += filtro.getHhmmss_200();
 			

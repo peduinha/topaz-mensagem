@@ -135,12 +135,14 @@ public class CompraService {
 			
 			message	+= "005248192212";
 			message += filtro.getData();
-			message += "599906123456009922005248TERMID019860200005216";
+			//message += "599906123456009922005248TERMID019860200005216"; ANTIGO
+			message += "599906123456009916005216TERMID019860200005216";
 			message += filtro.getData();
 			message += filtro.getHhmmss_200(); //aqui botar a hora do 200
 			
-			message += "0000012345600000000000021#102@0999#103@";
+			message += "0000012345600000000000021#102@0999#103@"; 
 			message += filtro.getConta();
+			
 			
 			byte[] bitmap = generateBitMap_2();
 			byte[] messageBytes = new byte[result2.length+messageType.getBytes().length+bitmap.length+message.getBytes().length];		
