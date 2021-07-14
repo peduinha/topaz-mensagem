@@ -13,6 +13,7 @@ import com.mensagem.dto.FiltroDTO;
 import com.mensagem.dto.HttpResponseDTO;
 import com.topaz.mensagem.service.CompraService;
 import com.topaz.mensagem.service.ContaService;
+import com.topaz.mensagem.service.SaqueLojaService;
 
 @RestController
 @RequestMapping("/testeatm")
@@ -23,6 +24,9 @@ public class MensagemController {
 	
 	@Autowired
 	private ContaService contaService;
+	
+	@Autowired
+	private SaqueLojaService saqueLojaService;
 
 	@PostMapping("/compra")
 	public HttpResponseDTO compra(@RequestBody FiltroDTO filtro) throws ConnectException {
@@ -50,7 +54,7 @@ public class MensagemController {
 			httpResponseDTO = this.compraService.executaCompraPara420(filtro);
 			if(httpResponseDTO.isSuccess()) {
 				retorno = httpResponseDTO.getMessage();
-				TimeUnit.SECONDS.sleep(3);
+				TimeUnit.SECONDS.sleep(10);
 				retorno += " | ";
 				
 				FiltroDTO dto = (FiltroDTO) httpResponseDTO.getContent().get("ret");
@@ -158,6 +162,21 @@ public class MensagemController {
 		}
 		
 		httpResponseDTO.setMessage(retorno);
+		return httpResponseDTO;
+	}
+	
+	@PostMapping("/saqueLoja")
+	public HttpResponseDTO saqueLoja(@RequestBody FiltroDTO filtro) {
+
+		HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
+		String validar = this.validar(filtro);
+
+		if (validar.equalsIgnoreCase("OK")) {
+			httpResponseDTO = this.saqueLojaService.retiro(filtro);			
+		} else {
+			return HttpResponseDTO.fail("VALIDAR - ERROS - " + validar);
+		}
+		
 		return httpResponseDTO;
 	}
 

@@ -42,4 +42,5 @@
 
 7- Retiro y reversa - http://localhost:8899/testeatm/retiroReversa
   
+8- Saque Loja - http://localhost:8899/testeatm/saqueLoja
   
