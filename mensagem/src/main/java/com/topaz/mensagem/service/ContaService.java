@@ -174,7 +174,8 @@ public class ContaService {
 			
 			message += "005216133519";
 			message += filtro.getData();
-			message += "601101206123456009916005216TERMID01CARD ACCEPTOR  CARD ACCEPTOR NAME/LOCATICITY NAME    BR986986021#102@0999#103@";
+			//message += "601101206123456009916005216TERMID01CARD ACCEPTOR  CARD ACCEPTOR NAME/LOCATICITY NAME    BR986986021#102@0999#103@";
+			message += "601101206000358009916005216TERMID01CARD ACCEPTOR  CARD ACCEPTOR NAME/LOCATICITY NAME    BR986986021#102@0999#103@";							
 			message += filtro.getConta();
 
 			byte[] bitmap = generateBitMap_2();
@@ -222,11 +223,12 @@ public class ContaService {
 			message += "005248192212";
 			message += filtro.getData();
 			//message += "601106123456009922005248TERMID019860200005216";
-			message += "601106123456009916005216TERMID019860200005216";
+			//message += "601106123456009916005216TERMID019860200005216";
+			message += "601106000358009916005216TERMID019860200005216";
 			message += filtro.getData();
 			message += filtro.getHhmmss_200();
 			
-			message += "0000012345600000000000021#102@0999#103@";
+			message += "0000000035800000000000021#102@0999#103@";
 			message += filtro.getConta();
 
 			byte[] bitmap = generateBitMap_3();
