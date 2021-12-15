@@ -145,7 +145,7 @@ public class MensagemController {
 			httpResponseDTO = this.contaService.retiroPara420(filtro);
 			if(httpResponseDTO.isSuccess()) {
 				retorno = httpResponseDTO.getMessage();
-				TimeUnit.SECONDS.sleep(3);
+				TimeUnit.SECONDS.sleep(10);
 				retorno += " | ";
 				
 				FiltroDTO dto = (FiltroDTO) httpResponseDTO.getContent().get("ret");
@@ -179,6 +179,37 @@ public class MensagemController {
 		
 		return httpResponseDTO;
 	}
+	
+	@PostMapping("/saqueLojaReversa")
+	public HttpResponseDTO saqueLojaReversa(@RequestBody FiltroDTO filtro) throws InterruptedException {
+
+		HttpResponseDTO httpResponseDTO = new HttpResponseDTO();
+		String retorno = "";
+		String validar = this.validar(filtro);
+
+		if (validar.equalsIgnoreCase("OK")) {
+			httpResponseDTO = this.saqueLojaService.retiro(filtro);
+			if(httpResponseDTO.isSuccess()) {
+				retorno = httpResponseDTO.getMessage();
+				TimeUnit.SECONDS.sleep(10);
+				retorno += " | ";
+				
+				FiltroDTO dto = (FiltroDTO) httpResponseDTO.getContent().get("ret");
+				filtro.setHhmmss_200(dto.getHhmmss_200());
+				httpResponseDTO = this.saqueLojaService.retiro420(filtro);
+				retorno += httpResponseDTO.getMessage();
+				
+			}else {
+				retorno = httpResponseDTO.getMessage();
+			}
+			
+		} else {
+			return HttpResponseDTO.fail("VALIDAR - ERROS - " + validar);
+		}
+		
+		httpResponseDTO.setMessage(retorno);
+		return httpResponseDTO;
+	}	
 
 	public String validar(FiltroDTO filtro) {
 
